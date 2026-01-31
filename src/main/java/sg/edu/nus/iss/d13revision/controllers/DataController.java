@@ -15,6 +15,7 @@ public class DataController {
     @GetMapping("/")
     public String healthCheck() {
         log.info("Health check endpoint called");
+        log.info("Java Runtime Version: {}", System.getProperty("java.runtime.version"));
         return "HEALTH CHECK OK!";
     }
 
