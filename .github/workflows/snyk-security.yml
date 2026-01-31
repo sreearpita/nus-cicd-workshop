@@ -1,32 +1,47 @@
-name: Snyk Maven Security Scan
-
-on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-
+name: Snyk Security Scan
+on: push
 jobs:
-  security:
+  snyk:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - uses: actions/checkout@main
+      
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven@main
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
 
-    - name: Set up Java
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17' # Or another version compatible with your project
-        distribution: 'temurin'
-        cache: 'maven'
+# name: Snyk Maven Security Scan
 
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions/maven@v3
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --severity-threshold=high # Optional: only fail for high severity issues
-        # You can add more arguments here, such as --file=pom.xml if it's not in the root
+# on:
+#   push:
+#     branches: [ main, master ]
+#   pull_request:
+#     branches: [ main, master ]
+
+# jobs:
+#   security:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout repository
+#       uses: actions/checkout@v4
+
+#     - name: Set up Java
+#       uses: actions/setup-java@v4
+#       with:
+#         java-version: '17' # Or another version compatible with your project
+#         distribution: 'temurin'
+#         cache: 'maven'
+
+#     - name: Run Snyk to check for vulnerabilities
+#       uses: snyk/actions/maven@v3
+#       env:
+#         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#       with:
+#         args: --severity-threshold=high # Optional: only fail for high severity issues
+#         # You can add more arguments here, such as --file=pom.xml if it's not in the root
 
     # - name: Monitor project with Snyk (optional)
     #   if: github.event_name == 'push'
