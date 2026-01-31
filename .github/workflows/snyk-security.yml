@@ -28,13 +28,13 @@ jobs:
         args: --severity-threshold=high # Optional: only fail for high severity issues
         # You can add more arguments here, such as --file=pom.xml if it's not in the root
 
-    - name: Monitor project with Snyk (optional)
-      if: github.event_name == 'push'
-      uses: snyk/actions/maven@v3
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: snyk monitor
+    # - name: Monitor project with Snyk (optional)
+    #   if: github.event_name == 'push'
+    #   uses: snyk/actions/maven@v3
+    #   env:
+    #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    #   with:
+    #     args: snyk monitor
 
  # This workflow uses actions that are not certified by GitHub.
  # They are provided by a third-party and are governed by
